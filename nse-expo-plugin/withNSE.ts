@@ -98,8 +98,6 @@ export function xcodeProjectAddNse(
   console.log({iosPath})
   console.log({sourceDir})
 
-  const nsePath = `${iosPath}/NotificationServiceExtension`
-
   const projPath = `${iosPath}/${appName}.xcodeproj/project.pbxproj`;
 
   const files = [
@@ -132,7 +130,7 @@ export function xcodeProjectAddNse(
     const targetFile = `${iosPath}/NSEFiles/NotificationService.m`;
     await copyFile(`${sourcePath}`, targetFile);
 
-    const entitlementsFilePath = `${nsePath}/${entitlementsFileName}`;
+    const entitlementsFilePath = `${iosPath}/NSEFiles/${entitlementsFileName}`;
     let entitlementsFile = await readFile(entitlementsFilePath);
     entitlementsFile = entitlementsFile.replace(/{{GROUP_IDENTIFIER}}/gm, `group.${bundleIdentifier}.NSE`);
     await writeFile(entitlementsFilePath, entitlementsFile);
