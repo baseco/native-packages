@@ -1,0 +1,11 @@
+{
+    "extends": "expo-module-scripts/tsconfig.plugin",
+    "compilerOptions": {
+        "rootDir": "./",
+        "outDir": "./build",
+        "declaration": false
+    },
+    "include": [
+      "./"
+    ]
+}
