@@ -115,22 +115,22 @@ export function xcodeProjectAddNse(
       return;
     }
 
-    fs.mkdirSync(`${iosPath}/NSEFiles`, { recursive: true });
+    fs.mkdirSync(`${iosPath}/NotificationServiceExtension`, { recursive: true });
 
-    const targetFileHeader = `${iosPath}/NSEFiles/NotificationService.h`;
+    const targetFileHeader = `${iosPath}/NotificationServiceExtension/NotificationService.h`;
     await copyFile(`${sourceDir}NotificationService.h`, targetFileHeader);
 
-    const targetFileEntitlements = `${iosPath}/NSEFiles/NotificationServiceExtension.entitlements`;
+    const targetFileEntitlements = `${iosPath}/NotificationServiceExtension/NotificationServiceExtension.entitlements`;
     await copyFile(`${sourceDir}NotificationServiceExtension.entitlements`, targetFileEntitlements);
 
-    const targetFilePlist = `${iosPath}/NSEFiles/NotificationServiceExtension-Info.plist`;
+    const targetFilePlist = `${iosPath}/NotificationServiceExtension/NotificationServiceExtension-Info.plist`;
     await copyFile(`${sourceDir}NotificationServiceExtension-Info.plist`, targetFilePlist);
 
     const sourcePath = `${sourceDir}NotificationService.m`
-    const targetFile = `${iosPath}/NSEFiles/NotificationService.m`;
+    const targetFile = `${iosPath}/NotificationServiceExtension/NotificationService.m`;
     await copyFile(`${sourcePath}`, targetFile);
 
-    const entitlementsFilePath = `${iosPath}/NSEFiles/${entitlementsFileName}`;
+    const entitlementsFilePath = `${iosPath}/NotificationServiceExtension/${entitlementsFileName}`;
     let entitlementsFile = await readFile(entitlementsFilePath);
     entitlementsFile = entitlementsFile.replace(/{{GROUP_IDENTIFIER}}/gm, `group.${bundleIdentifier}.NSE`);
     await writeFile(entitlementsFilePath, entitlementsFile);
