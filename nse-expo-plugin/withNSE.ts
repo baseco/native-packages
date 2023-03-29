@@ -91,22 +91,22 @@ export function xcodeProjectAddNse(
   sourceDir: string
 ): void {
 
-  const entitlementsFileName =`NSENotificationServiceExtension.entitlements`;
+  const entitlementsFileName =`NotificationServiceExtension.entitlements`;
 
   const { iosPath, devTeam, bundleIdentifier,  } = options;
 
   console.log({iosPath})
   console.log({sourceDir})
 
-  const nsePath = `${iosPath}/NSENotificationServiceExtension`
+  const nsePath = `${iosPath}/NotificationServiceExtension`
 
   const projPath = `${iosPath}/${appName}.xcodeproj/project.pbxproj`;
 
   const files = [
     "NotificationService.h",
     "NotificationService.m",
-    `NSENotificationServiceExtension.entitlements`,
-    `NSENotificationServiceExtension-Info.plist`
+    `NotificationServiceExtension.entitlements`,
+    `NotificationServiceExtension-Info.plist`
   ];
 
   const xcodeProject = xcode.project(projPath);
@@ -117,19 +117,19 @@ export function xcodeProjectAddNse(
       return;
     }
 
-    fs.mkdirSync(`${iosPath}/NSENotificationServiceExtension`, { recursive: true });
+    fs.mkdirSync(`${iosPath}/NSEFiles`, { recursive: true });
 
-    const targetFileHeader = `${iosPath}/NSENotificationServiceExtension/NotificationService.h`;
+    const targetFileHeader = `${iosPath}/NotificationServiceExtension/NotificationService.h`;
     await copyFile(`${sourceDir}NotificationService.h`, targetFileHeader);
 
-    const targetFileEntitlements = `${iosPath}/NSENotificationServiceExtension/NSENotificationServiceExtension.entitlements`;
-    await copyFile(`${sourceDir}NSENotificationServiceExtension.entitlements`, targetFileEntitlements);
+    const targetFileEntitlements = `${iosPath}/NotificationServiceExtension/NotificationServiceExtension.entitlements`;
+    await copyFile(`${sourceDir}NotificationServiceExtension.entitlements`, targetFileEntitlements);
 
-    const targetFilePlist = `${iosPath}/NSENotificationServiceExtension/NSENotificationServiceExtension-Info.plist`;
-    await copyFile(`${sourceDir}NSENotificationServiceExtension-Info.plist`, targetFilePlist);
+    const targetFilePlist = `${iosPath}/NotificationServiceExtension/NotificationServiceExtension-Info.plist`;
+    await copyFile(`${sourceDir}NotificationServiceExtension-Info.plist`, targetFilePlist);
 
     const sourcePath = `${sourceDir}NotificationService.m`
-    const targetFile = `${iosPath}/NSENotificationServiceExtension/NotificationService.m`;
+    const targetFile = `${iosPath}/NotificationServiceExtension/NotificationService.m`;
     await copyFile(`${sourcePath}`, targetFile);
 
     const entitlementsFilePath = `${nsePath}/${entitlementsFileName}`;
@@ -137,7 +137,7 @@ export function xcodeProjectAddNse(
     entitlementsFile = entitlementsFile.replace(/{{GROUP_IDENTIFIER}}/gm, `group.${bundleIdentifier}.NSE`);
     await writeFile(entitlementsFilePath, entitlementsFile);
 
-    const extGroup = xcodeProject.addPbxGroup(files, "NSENotificationServiceExtension", "NSENotificationServiceExtension");
+    const extGroup = xcodeProject.addPbxGroup(files, "NotificationServiceExtension", "NotificationServiceExtension");
 
     const groups = xcodeProject.hash.project.objects["PBXGroup"];
 
@@ -147,7 +147,7 @@ export function xcodeProjectAddNse(
       }
     });
 
-    const nseTarget = xcodeProject.addTarget("NSENotificationServiceExtension", "app_extension", "NSENotificationServiceExtension", `${bundleIdentifier}.NSENotificationServiceExtension`);
+    const nseTarget = xcodeProject.addTarget("NotificationServiceExtension", "app_extension", "NotificationServiceExtension", `${bundleIdentifier}.NotificationServiceExtension`);
 
     xcodeProject.addBuildPhase(
       ["NotificationService.m"],
