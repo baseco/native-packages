@@ -95,9 +95,6 @@ export function xcodeProjectAddNse(
 
   const { iosPath, devTeam, bundleIdentifier,  } = options;
 
-  console.log({iosPath})
-  console.log({sourceDir})
-
   const projPath = `${iosPath}/${appName}.xcodeproj/project.pbxproj`;
 
   const files = [
