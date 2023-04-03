@@ -4,9 +4,9 @@
   "description": "Native Packages",
   "main": "./app.plugin.js",
   "scripts": {
-    "build": "yarn run lint && rm -rf build && tsc && cp -a nse-expo-plugin/NotificationService.h build/ && cp -a nse-expo-plugin/NotificationService.m build/ && cp -a nse-expo-plugin/NotificationServiceExtension-Info.plist build/ && cp -a nse-expo-plugin/NotificationServiceExtension.entitlements build/",
+    "build": "npm run lint && rm -rf build && tsc && cp -a nse-expo-plugin/NotificationService.h build/ && cp -a nse-expo-plugin/NotificationService.m build/ && cp -a nse-expo-plugin/NotificationServiceExtension-Info.plist build/ && cp -a nse-expo-plugin/NotificationServiceExtension.entitlements build/",
     "lint": "eslint . --ext .ts",
-    "prepare": "yarn run build"
+    "prepare": "npm run build"
   },
   "license": "MIT",
   "devDependencies": {
