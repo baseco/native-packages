@@ -38,10 +38,8 @@
 
 
 - (void)richNotificationAttachments:(UNMutableNotificationContent *)originalContent withResponse:(nullable void(^)(UNMutableNotificationContent *__nullable modifiedContent))block  {
-    // For Image or Video in-app messages, we will send the media URL in the
-    // _st payload
-  
     NSString *imageURL = originalContent.userInfo[@"aps"][@"alert"][@"image_url"];
+    NSString *thumbnailKey = originalContent.userInfo[@"aps"][@"alert"][@"thumbnailKey"];
     NSString *videoURL = originalContent.userInfo[@"_st"][@"video_url"];
     
     NSURL *attachmentURL = nil;
@@ -64,9 +62,8 @@
         }
         else {
             NSFileManager *fileManager = [NSFileManager defaultManager];
-            NSString *fileSuffix = attachmentURL.lastPathComponent;
             
-            NSURL *typedAttachmentURL = [NSURL fileURLWithPath:[(NSString *_Nonnull)fileLocation.path stringByAppendingString:fileSuffix]];
+            NSURL *typedAttachmentURL = [NSURL fileURLWithPath:[(NSString *_Nonnull)fileLocation.path stringByAppendingString:thumbnailKey]];
             [fileManager moveItemAtURL:fileLocation toURL:typedAttachmentURL error:&error];
             
             NSError *attachError = nil;
